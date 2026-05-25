@@ -31,6 +31,7 @@
 **变换顺序**：先尺度变换和反转，最后时移。
 
 **周期信号的特殊性**：
+
 - 连续正弦 $x(t) = \cos(\omega_0 t + \phi)$ 总是周期的，$T = 2\pi/\omega_0$
 - 离散正弦 $x[n] = \cos(\omega_0 n + \phi)$ 仅当 $\omega_0/2\pi$ 为有理数时周期
 
@@ -68,6 +69,7 @@ $$
 
 ---
 
+
 ### 2.2 单位冲激与单位阶跃
 
 | 信号 | 连续时间 | 离散时间 |
@@ -80,6 +82,22 @@ $$
 | 卷积性质 | $x(t) * \delta(t-t_0) = x(t-t_0)$ | $x[n] * \delta[n-n_0] = x[n-n_0]$ |
 
 **连续时间冲激的尺度变换**：$\delta(at) = \frac{1}{|a|}\delta(t)$
+
+---
+
+### 2.3 基本连续信号
+
+| 信号 | 定义 | 图示/说明 | 性质 |
+|------|------|----------|------|
+| **抽样信号** | $\operatorname{Sa}(t) = \dfrac{\sin t}{t}$ | 偶函数，$t=0$ 处取最大值 $1$ | $\int_{-\infty}^{+\infty} \operatorname{Sa}(t) dt = \pi$，$\operatorname{Sa}(0)=1$，过零点 $t=k\pi\ (k=\pm1,\pm2,\ldots)$ |
+| **方波脉冲** | $G_\tau(t) = \begin{cases} 1, & \|t\| < \tau/2 \\ 0, & \|t\| > \tau/2 \end{cases}$ | 宽度 $\tau$，高度 $1$ | 偶函数，能量 $E = \tau$ |
+| **三角脉冲** | $\Lambda_\tau(t) = \begin{cases} 1 - \dfrac{2\|t\|}{\tau}, & \|t\| < \tau/2 \\ 0, & \|t\| > \tau/2 \end{cases}$ | 底边宽 $\tau$，峰值 $1$ | 偶函数，可由方波卷积得到 |
+| **符号函数** | $\operatorname{sgn}(t) = \begin{cases} 1, & t > 0 \\ 0, & t = 0 \\ -1, & t < 0 \end{cases}$ | 奇函数，跳跃幅度 $2$ | $\operatorname{sgn}(t) = 2u(t) - 1$，$\dfrac{d}{dt}\operatorname{sgn}(t) = 2\delta(t)$ |
+
+**关系**：
+
+- 抽样信号与方波脉冲互为傅里叶变换对
+- 三角脉冲可由两个相同方波脉冲卷积得到：$\Lambda_\tau(t) = \dfrac{2}{\tau}\, G_{\tau/2}(t) * G_{\tau/2}(t)$
 
 ---
 
@@ -140,9 +158,9 @@ LTI 系统同时满足**线性**和**时不变性**，其核心表征思想是�
 | 离散时间 | 单位脉冲 $\delta[n]$ | 脉冲分解 | 卷积和 |
 | 连续时间 | 单位冲激 $\delta(t)$ | 冲激分解 | 卷积积分 |
 
----
-
 ### 4.2 信号的基函数分解
+
+---
 
 **离散时间（脉冲分解）**：
 
@@ -314,32 +332,4 @@ $$
 
 $$
 \frac{d}{dt}u_k(t) = u_{k-1}(t), \quad u_k(t) = \int_{-\infty}^{t} u_{k-1}(\tau) d\tau
-$$
-
----
-
-## 8. 重要公式汇总
-
-### 8.1 信号能量与功率
-
-$$
-\boxed{E_\infty = \int_{-\infty}^{+\infty} |x(t)|^2 dt = \sum_{n=-\infty}^{+\infty} |x[n]|^2}, \quad \boxed{P_\infty = \lim_{T \to \infty} \frac{1}{2T} \int_{-T}^{T} |x(t)|^2 dt}
-$$
-
-### 8.2 卷积运算
-
-$$
-\boxed{y[n] = x[n] * h[n] = \sum_{k=-\infty}^{+\infty} x[k]h[n-k]}, \quad \boxed{y(t) = x(t) * h(t) = \int_{-\infty}^{+\infty} x(\tau)h(t-\tau) d\tau}
-$$
-
-### 8.3 系统性质充要条件
-
-$$
-\boxed{\text{因果}: h[n]=0\ (\forall n<0) \iff h(t)=0\ (\forall t<0)}, \quad \boxed{\text{稳定}: \sum |h[k]|<\infty \iff \int |h(\tau)|d\tau<\infty}
-$$
-
-### 8.4 阶跃响应与冲激响应关系
-
-$$
-\boxed{h[n] = s[n] - s[n-1]}, \quad \boxed{h(t) = \frac{ds(t)}{dt}}
 $$
