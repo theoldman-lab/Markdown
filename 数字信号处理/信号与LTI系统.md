@@ -20,35 +20,7 @@
 
 ---
 
-### 1.2 自变量变换
-
-| 变换类型 | 连续时间 | 离散时间 |
-|----------|---------|---------|
-| 时移 | $x(t-t_0)$ | $x[n-n_0]$ |
-| 反转 | $x(-t)$ | $x[-n]$ |
-| 尺度变换 | $x(at)$ | $x[kn]$ ($k$ 为整数) |
-
-**变换顺序**：先尺度变换和反转，最后时移。
-
-**周期信号的特殊性**：
-
-- 连续正弦 $x(t) = \cos(\omega_0 t + \phi)$ 总是周期的，$T = 2\pi/\omega_0$
-- 离散正弦 $x[n] = \cos(\omega_0 n + \phi)$ 仅当 $\omega_0/2\pi$ 为有理数时周期
-
-**周期性详细判据**：
-
-| 信号类型 | 周期性条件 | 基波周期/非周期原因 |
-|----------|-----------|------------------|
-| 连续复指数 $e^{j\omega_0 t}$ | 总是周期 | $T_0 = \frac{2\pi}{\lvert\omega_0\rvert}$ |
-| 连续正弦 $\cos(\omega_0 t + \phi)$ | 总是周期 | $T_0 = \frac{2\pi}{\lvert\omega_0\rvert}$ |
-| 离散正弦 $\cos(\omega_0 n + \phi)$ | $\frac{\omega_0}{2\pi} \in \mathbb{Q}$ | $N_0 = \frac{2\pi}{\omega_0}k$（取最小正整数 $k$ 使 $N_0$ 为整数） |
-| 经三角恒等变换的正弦 | 降幂后频率加倍，周期减半 | $\sin^2\theta = \frac{1-\cos 2\theta}{2}$，新周期为原周期之半 |
-| 实指数 $\mathrm{e}^{at}$ | 非周期 | 单调振荡，不满足 $x(t+T)=x(t)$ |
-| 被 $u(t)$ 截断的周期成分 | 非周期 | 一侧为 $0$，不满足在 $(-\infty,\infty)$ 上重复的条件 |
-
----
-
-### 1.3 奇偶分解
+### 1.2 奇偶分解
 
 任意信号可分解为偶部与奇部之和：
 
@@ -86,19 +58,11 @@ $$
 | 信号 | 连续时间 | 离散时间 |
 |------|---------|---------|
 | 单位阶跃 | $u(t) = \begin{cases} 1, & t > 0 \\ 0, & t < 0 \end{cases}$ | $u[n] = \begin{cases} 1, & n \geq 0 \\ 0, & n < 0 \end{cases}$ |
-| 单位冲激 | $\delta(t) = 0 (t \neq 0), \int \delta(t) dt = 1$ | $\delta[n] = \begin{cases} 1, & n = 0 \\ 0, & n \neq 0 \end{cases}$ |
+| 单位冲激 | $\delta(t) = 0 (t \neq 0), \int \delta(t) dt = 1，\delta(at)=\frac{1}{|a|}\delta(t)$ | $\delta[n] = \begin{cases} 1, & n = 0 \\ 0, & n \neq 0 \end{cases}$ |
 | 微分/差分关系 | $\delta(t) = \frac{du(t)}{dt}$ | $\delta[n] = u[n] - u[n-1]$ |
 | 积分/求和关系 | $u(t) = \int_{-\infty}^{t} \delta(\tau) d\tau$ | $u[n] = \sum_{k=-\infty}^{n} \delta[k]$ |
 | 筛选性质 | $\int x(t)\delta(t-t_0) dt = x(t_0)$ | $\sum x[k]\delta[n-k] = x[n]$ |
 | 卷积性质 | $x(t) * \delta(t-t_0) = x(t-t_0)$ | $x[n] * \delta[n-n_0] = x[n-n_0]$ |
-
-**连续时间冲激的尺度变换**：$\delta(at) = \frac{1}{|a|}\delta(t)$
-
-**乘积与卷积的区别**：
-
-- **乘积（采样）**：$x(t)\delta(t-t_0) = x(t_0)\delta(t-t_0)$——将 $x(t)$ 在 $t_0$ 处的值提取出来
-- **卷积（时移）**：$x(t) * \delta(t-t_0) = x(t-t_0)$——将 $x(t)$ 平移 $t_0$
-- **冲激串卷积**：$x[n] * \sum_{k=-\infty}^{\infty} \delta[n-kN] = \sum_{k=-\infty}^{\infty} x[n-kN]$
 
 ---
 
@@ -108,13 +72,8 @@ $$
 |------|------|----------|------|
 | **抽样信号** | $\operatorname{Sa}(t) = \dfrac{\sin t}{t}$ | 偶函数，$t=0$ 处取最大值 $1$ | $\int_{-\infty}^{+\infty} \operatorname{Sa}(t) dt = \pi$，$\operatorname{Sa}(0)=1$，过零点 $t=k\pi\ (k=\pm1,\pm2,\ldots)$ |
 | **方波脉冲** | $G_\tau(t) = \begin{cases} 1, & \|t\| < \tau/2 \\ 0, & \|t\| > \tau/2 \end{cases}$ | 宽度 $\tau$，高度 $1$ | 偶函数，能量 $E = \tau$ |
-| **三角脉冲** | $\Lambda_\tau(t) = \begin{cases} 1 - \dfrac{2\|t\|}{\tau}, & \|t\| < \tau/2 \\ 0, & \|t\| > \tau/2 \end{cases}$ | 底边宽 $\tau$，峰值 $1$ | 偶函数，可由方波卷积得到 |
+| **三角脉冲** | $\Lambda_\tau(t) = \begin{cases} 1 - \dfrac{2\|t\|}{\tau}, & \|t\| < \tau/2 \\ 0, & \|t\| > \tau/2 \end{cases}$ | 底边宽 $\tau$，峰值 $1$ | 偶函数，可由方波卷积得到$\Lambda_\tau(t) = \dfrac{2}{\tau}\, G_{\tau/2}(t) * G_{\tau/2}(t)$ |
 | **符号函数** | $\operatorname{sgn}(t) = \begin{cases} 1, & t > 0 \\ 0, & t = 0 \\ -1, & t < 0 \end{cases}$ | 奇函数，跳跃幅度 $2$ | $\operatorname{sgn}(t) = 2u(t) - 1$，$\dfrac{d}{dt}\operatorname{sgn}(t) = 2\delta(t)$ |
-
-**关系**：
-
-- 抽样信号与方波脉冲互为傅里叶变换对
-- 三角脉冲可由两个相同方波脉冲卷积得到：$\Lambda_\tau(t) = \dfrac{2}{\tau}\, G_{\tau/2}(t) * G_{\tau/2}(t)$
 
 ---
 
@@ -313,14 +272,8 @@ $$
 |------|------|------|
 | 时移叠加 | $x(t-t_1) * h(t-t_2) = y(t-t_1-t_2)$ | 各自时移在输出端叠加 |
 | 时间反转 | $x(-t) * h(-t) = y(-t)$ | 两边同时反转，输出也反转 |
-| 时移抵消 | $x(t-2) * h(t+1) = y(t-1)$ | 时移量代数相加 |
-
-**常见误区**：
-- $y[n-1] = x[n-1] * h[n-1]$，正确为 $y[n-1] = x[n-1] * h[n] = x[n] * h[n-1]$（只移位一侧）
-- 混淆乘积与卷积：$x(t)\delta(t-t_0) = x(t_0)\delta(t-t_0)$ 是采样，$x(t) * \delta(t-t_0) = x(t-t_0)$ 是时移
 
 **级联系统等效**：
-
 $$
 x(t) \to \boxed{h_1(t)} \to \boxed{h_2(t)} \to y(t) \quad \Longleftrightarrow \quad x(t) \to \boxed{h_1(t) * h_2(t)} \to y(t)
 $$
@@ -343,6 +296,7 @@ y[n] = \sum_{k=0}^{+\infty} h[k]x[n-k], \quad y(t) = \int_{0}^{+\infty} h(\tau)x
 $$
 
 **稳定性示例**：
+
 - $h[n] = a^n u[n]$ 稳定 $\iff |a| < 1$
 - $h(t) = e^{-t}u(t)$ 稳定（$\int_0^\infty e^{-t} dt = 1$）
 - $h(t) = u(t)$ 不稳定（$\int_0^\infty 1 dt = \infty$）
@@ -360,17 +314,6 @@ $$
 **判据详解**：
 - 对于 **右单边信号**$f(t)u(t-t_0)$（或因果序列 $f[n]u[n]$）：积分/求和方向为正无穷，要求 $f(t) \to 0$（或 $f[n] \to 0$）当 $t \to +\infty$
 - 对于 **左单边信号**$f(t)u(t_0-t)$（或反因果序列 $f[n]u[-n]$）：积分/求和方向为负无穷，要求 $f(t) \to 0$（或 $f[n] \to 0$）当 $t \to -\infty$
-
----
-
-### 5.3 阶跃响应
-
-**单位阶跃响应** $s[\cdot]$ 或 $s(\cdot)$ 是系统对单位阶跃输入的响应：
-
-| 关系 | 离散时间 | 连续时间 |
-|------|---------|---------|
-| 阶跃响应定义 | $s[n] = h[n] * u[n] = \sum_{k=-\infty}^{n} h[k]$ | $s(t) = h(t) * u(t) = \int_{-\infty}^{t} h(\tau) d\tau$ |
-| 从阶跃响应恢复 | $h[n] = s[n] - s[n-1]$ | $h(t) = \frac{ds(t)}{dt}$ |
 
 ---
 
@@ -435,44 +378,3 @@ $$
 - 零状态响应是否指无激励时的响应？**否**。恰好相反：有激励、零初始状态
 
 **记忆要点**：零输入全是自由响应，但自由响应不全是零输入。
-
----
-
-## 8. 奇异函数
-
-### 8.1 单位冲激的数学本质
-
-**离散时间**：$\delta[n]$ 是普通函数（单位脉冲序列）。
-
-**连续时间**：$\delta(t)$ 是**广义函数**（分布），通过极限或卷积性质定义：
-
-$$
-\delta(t) = \lim_{\epsilon \to 0} \delta_\epsilon(t), \quad \int_{-\infty}^{+\infty} \delta_\epsilon(t) dt = 1
-$$
-
-**卷积定义**：$\delta(t)$ 满足 $x(t) * \delta(t) = x(t)$ 对任意"良好"函数成立。
-
----
-
-### 8.2 冲激偶与高阶奇异函数
-
-**单位冲激偶** $\delta'(t)$ 定义为 $\delta(t)$ 的一阶导数：
-
-| 性质 | 公式 |
-|------|------|
-| 筛选性质 | $\int_{-\infty}^{+\infty} x(t)\delta'(t) dt = -x'(0)$ |
-| 推广 | $\int_{-\infty}^{+\infty} x(t)\delta^{(k)}(t) dt = (-1)^k x^{(k)}(0)$ |
-| 卷积性质 | $x(t) * \delta'(t) = x'(t)$ |
-| 与阶跃关系 | $\delta'(t) = \frac{d^2 u(t)}{dt^2}$ |
-
-**奇异函数族**（通过递归积分定义）：
-
-$$
-u_{-1}(t) = \delta(t), \quad u_0(t) = u(t), \quad u_k(t) = \frac{t^k}{k!}u(t) \ (k \geq 1)
-$$
-
-满足关系：
-
-$$
-\frac{d}{dt}u_k(t) = u_{k-1}(t), \quad u_k(t) = \int_{-\infty}^{t} u_{k-1}(\tau) d\tau
-$$
