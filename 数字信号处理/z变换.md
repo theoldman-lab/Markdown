@@ -11,7 +11,6 @@ DTFT $X(e^{j\omega}) = \sum_{n=-\infty}^{+\infty} x[n] e^{-j\omega n}$ 将序列
 引入复变量 $z = r e^{j\omega}$，考虑复指数序列 $z^n = r^n \cdot e^{j\omega n}$：$e^{j\omega n}$ 控制振荡频率，$r^n$ 控制增长（$r>1$）或衰减（$r<1$）。
 
 **特征函数性质**：设离散 LTI 系统的单位样值响应为 $h[n]$，输入 $x[n] = z^n$ 时：
-
 $$
 y[n] = h[n] * z^n = z^n \sum_{k=-\infty}^{+\infty} h[k] z^{-k} = H(z) z^n
 $$
@@ -532,18 +531,6 @@ $$
 \end{aligned}
 $$
 
-**应用示例**：由 $\mathcal{Z}\{u[n]\} = \dfrac{1}{1 - z^{-1}}$（$|z| > 1$），直接可得：
-
-$$
-\mathcal{Z}\{a^n u[n]\} = \frac{1}{1 - a z^{-1}}, \quad |z| > |a|
-$$
-
-以及：
-
-$$
-\mathcal{Z}\{r^n \cos(\omega_0 n) u[n]\} = \frac{1 - r\cos(\omega_0) z^{-1}}{1 - 2r\cos(\omega_0) z^{-1} + r^2 z^{-2}}, \quad |z| > |r|
-$$
-
 ---
 
 ### 5.4 时间反转
@@ -587,11 +574,6 @@ $$
 $$
 \boxed{n^k x[n] \stackrel{\mathcal{Z}}{\longleftrightarrow} \left( -z \frac{d}{dz} \right)^k X(z)}
 $$
-
-**应用示例**：由 $\mathcal{Z}\{u[n]\} = 1/(1 - z^{-1})$（$|z| > 1$），通过 z 域微分：
-
-- $n u[n] \longleftrightarrow -z \dfrac{d}{dz}\!\left( \dfrac{1}{1 - z^{-1}} \right) = \dfrac{z^{-1}}{(1 - z^{-1})^2}$
-- $n a^n u[n] \longleftrightarrow -z \dfrac{d}{dz}\!\left( \dfrac{1}{1 - a z^{-1}} \right) = \dfrac{a z^{-1}}{(1 - a z^{-1})^2}$
 
 ---
 
@@ -668,14 +650,7 @@ $$
 \boxed{\lim_{n \to \infty} x[n] = \lim_{z \to 1} (1 - z^{-1}) X(z) = \lim_{z \to 1} (z - 1) X(z)}
 $$
 
-**应用示例**：
 
-已知 $X(z) = \dfrac{1}{(1 - z^{-1})(1 - 0.5 z^{-1})}$，$|z| > 1$：
-
-- 初值：$x[0] = \lim_{z \to \infty} \dfrac{1}{(1 - z^{-1})(1 - 0.5 z^{-1})} = 1$
-- 终值：$x[\infty] = \lim_{z \to 1} (1 - z^{-1}) \cdot \dfrac{1}{(1 - z^{-1})(1 - 0.5 z^{-1})} = \lim_{z \to 1} \dfrac{1}{1 - 0.5 z^{-1}} = 2$
-
-实际反变换验证：$x[n] = (2 - 0.5^n) u[n]$，$x[0] = 1$，$x[\infty] = 2$。✓
 
 > **终值定理的有效性条件**：$(z - 1)X(z)$ 在单位圆上及外部（除 $z = 1$ 可能为单极点外）无极点。若不满足（如 $X(z)$ 的极点在单位圆上），结论不可靠——此时 $x[n]$ 为持续振荡，无稳态终值。
 
